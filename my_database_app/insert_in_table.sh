@@ -18,7 +18,7 @@ read table_name
 
 let num_fields=`head -1 $table_name | awk -F: '{print NF}'`
 
-for ((i=1;i<=$num_fields;i++))
+for ((i=1;i<$num_fields;i++))
 do
 	
 	echo "insert filed num $i"

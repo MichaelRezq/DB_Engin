@@ -1,11 +1,13 @@
 #!/usr/bin/bash
-echo insert table name
+echo write table name
 read table_name
+export table_name
 
 select choice in Column_name row
 do 
 	case $choice in 
-	Column_name ) echo column name
+	Column_name ) echo update with column name
+			 ../update_coulmn.sh
 		;;
 	row ) echo row
 		;;

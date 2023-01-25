@@ -8,8 +8,7 @@ do
 	case $choice in 
 		Delete_All ) echo delettig all table data 
 			;;
-		Delete_column )echo deletting column 
-			;;
+		
 		Delete_Row )echo deleting row 
 			;;
 		* ) echo chose a valid choice 
