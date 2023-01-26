@@ -7,7 +7,7 @@ select choice in Column_name row
 do 
 	case $choice in 
 	Column_name ) echo update with column name
-			 ../update_coulmn.sh
+			 ../update_column.sh
 		;;
 	row ) echo row
 		;;
