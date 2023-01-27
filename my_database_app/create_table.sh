@@ -1,14 +1,56 @@
 #!/usr/bin/bash
 
-echo "insert you table name"
-read table_name
+
 #vaildate table name
 
+echo "----------------------------"
+echo "Already exist Tables..."
+ls -S 
+echo "                               "
 
-touch $table_name
+# validating the input name
+while true
+do 
+# read the input
+read -p "inter different name for your new table : "
+ table_name=$REPLY
 
-echo "insert num of fields for $table_name "
-read fields_num
+case $table_name in
+#the name can't be empty
+	'' ) echo "the name can't be empty."
+					continue ;;
+# the name can't have spaces
+	*[[:space:]] | *[[:space:]]* | [[:space:]]* ) echo "the name can't have any spaces"
+					continue;;
+# the name can't tart with numbers.
+	[0-9]* ) echo " the name can't start with numbers"
+					continue;;
+# the name must start with a-zA-z then can be zero or more a-zA-Z-0-9_.
+	*[a-zA-Z_]*[a-zAZ0-9_] | [a-zA-z_] )
+	# search if the name exist in the list?
+	if (find $table_name  `ls -F ` &> ~/../../dev/null )
+	then
+	echo "ops looks like  $table_name DB is Already exist"
+	echo "                               "
+					continue
+	else
+				touch $table_name 
+		echo "congrats you created table named $table_name"
+		echo "                               "
+					break
+	fi
+	  					;;
+# the name cant have special caracter.
+	* ) echo " the name can't have special caracters"
+			echo "                               "
+					continue;;
+esac
+done
+
+# then inserting data to the table
+
+read -p "insert num of fields for $table_name : " fields_num
+
 let fields_num=fields_num
 #let sum=$fields_num+5
 #echo $sum
@@ -16,11 +58,12 @@ let fields_num=fields_num
 echo "your table fields will be $fields_num"
 
 #insert your meta data
-echo "insert your meta data "
+echo "-
+------------>insert your meta data  for $table_name table"
 for ((i=1;i<=$fields_num;i++))
 do
-	echo insert column num $i name
-	read col_name
+	read  -p "type column num $i name: " col_name
+
 	row_name+=$col_name:
 done
 
@@ -28,11 +71,11 @@ done
 
 #insert your type of data
 
-echo "insert your type of  data "
+echo "
+------------->insert your type of  data  for $table_name table"
 for ((i=1;i<=$fields_num;i++))
 do
-	echo insert column num $i type
-	read col_type
+	read  -p "type column num $i type: " col_type
 	row_type+=$col_type:
 done
 
