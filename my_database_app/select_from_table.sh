@@ -21,12 +21,20 @@ do
         	awk -F: '{print $'$REPLY'}' $table_name 
     	done
 		;;
-	Select_row ) read -p "input your id(PK) row: " pk
-		# validation on PK
-		echo "------------------------"
-		echo `head -1 "$table_name"`
-		echo "------------------------"
-		echo `grep ^$pk $table_name `
+
+	Select_row ) 
+		read -p "input your id(PK) row: " pk
+		row=`awk -F':' ' {  if($1=='$pk')  print $0}' $table_name  `
+		# check the PK exist
+		if grep -Fxq "$row" "$table_name" > /dev/null;
+		then
+			echo "------------------------"
+			echo `head -1 "$table_name"`
+			echo "------------------------"
+			echo `grep ^$pk $table_name `
+		else
+			echo "id(PK) '$pk' dosent't exist please press 'enter' and write valid id"
+		fi
 		;;
 esac
 done
