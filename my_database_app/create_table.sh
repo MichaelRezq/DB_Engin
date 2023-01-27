@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+
 echo "insert you table name"
 read table_name
 #vaildate table name

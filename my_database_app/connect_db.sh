@@ -1,10 +1,39 @@
 #!/usr/bin/bash
-read -p "write your DB name ? "
- cd $REPLY
+PS3="  Type your DB number to connect with: "
+
+echo
+echo "-----> Select your DB number from the menu <--------"
+echo
+array=(`ls -F | grep / | tr / " "`)
+
+
+# echo ${#array[*]}
+
+select choice in  ${array[*]}
+do
+	if [ $REPLY -gt ${#array[*]} ]
+	then
+		echo "
+		$REPLY not on the menu"
+		continue
+	else
+		cd ${array[${REPLY}-1]}
+		
+		echo "
+		...You are connected to  ${array[${REPLY}-1]} DB ..."
+		echo
+		break 
+	fi
+done	
+	echo
+
+	PS3="  Type your choice number : "
+
  select choice in Create_table List_tables Drop_table Insert_in_table Select_from_table Delete_from_table Update_from_table Remove_table
  do
 	 case $choice in 
-		 Create_table ) echo "creating table..."
+		 Create_table ) echo "
+		 creating table..."
 			 ../create_table.sh
 			 ;;
 		 List_tables ) echo "listing tables... "

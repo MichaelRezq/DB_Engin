@@ -1,6 +1,10 @@
 #!/usr/bin/bash
  read -p "Write table name: " table_name
  
+
+
+
+ 
 #validate table name
 columns=`head -1 "$table_name" | awk 'BEGIN{ RS = ":";} {print $1}'`
 

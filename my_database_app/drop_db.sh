@@ -1,15 +1,29 @@
 #!/usr/bin/bash
-list=`ls -F | grep /`
-read -p "insert DB name to delete ? "
-del_db=$REPLY
-#if grep $REPLY $list
-#then
-	read -p "Are you sure to del. $REPLY (y/n) ? "
-	if [  $REPLY=[yY] ]
+
+
+PS3="  Type your Table number to Drop : "
+
+echo
+echo "-----> Select your Table number from the menu <--------"
+echo
+array=(`ls -F | grep / | tr / " "`)
+
+
+# echo ${#array[*]}
+
+select choice in  ${array[*]}
+do
+	if [ $REPLY -gt ${#array[*]} ]
 	then
-	rm -r $del_db
-	echo "you deleted the DB named $del_db successfully "
+		echo "
+		$REPLY not on the menu"
+		continue
+	else
+		rm -r ${array[${REPLY}-1]}
+		
+		echo "
+		...Your ${array[${REPLY}-1]} DB deleted successfully ..."
+		echo
+		break 
 	fi
-#else 
-#	echo "insert a valid name "
-#fi
+done	

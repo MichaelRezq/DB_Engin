@@ -1,3 +1,6 @@
 #!/usr/bin/bash
-
-ls -F | grep /
+echo
+echo "--------> the Already exist Databases <---------"
+echo
+ls -F | grep / | tr / " "
+echo

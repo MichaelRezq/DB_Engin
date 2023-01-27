@@ -1,3 +1,7 @@
 #!/usr/bin/bash
 
-ls
+echo
+echo "--------> the Already exist Databases <---------"
+echo
+ls 
+echo

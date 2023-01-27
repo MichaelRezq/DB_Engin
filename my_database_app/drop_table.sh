@@ -1,12 +1,29 @@
 #!/usr/bin/bash
-echo "insert table name to drop "
-read drop_name
-#validate if the name of file already exist
 
-read -p "Are you sure to delete $drop_name?(y/n)"
-if [ $REPLY=[yY] ]
-then
-	rm $drop_name
-	echo "$drop_name table dropped successfully"
-fi
+PS3="  Type your Table number to Drop : "
+
+echo
+echo "-----> Select your Table number from the menu <--------"
+echo
+array=(`ls -S`)
+
+
+# echo ${#array[*]}
+
+select choice in  ${array[*]}
+do
+	if [ $REPLY -gt ${#array[*]} ]
+	then
+		echo "
+		$REPLY not on the menu"
+		continue
+	else
+		rm   ${array[${REPLY}-1]}
+		
+		echo "
+		...  ${array[${REPLY}-1]} Table dropped successfully..."
+		echo
+		break 
+	fi
+done	
 

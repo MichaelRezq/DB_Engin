@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-
+PS3="=>Type your choice: "
 echo choose from the folowing
 select choice in Create_Db List_Db Connect_Db Drop_Db
 do
