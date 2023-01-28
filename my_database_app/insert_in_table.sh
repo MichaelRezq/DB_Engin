@@ -1,20 +1,29 @@
 #!/usr/bin/bash
 
-#array=`ls`
-#echo ${array[*]}
+echo "
+-----> Select your Table number from the menu <--------
+"
+array=(`ls`)
 
-#select choice in  ${array[*]}
-#do
-#	if [ $REPLY -gt ${#array[*]} ]
-#	then
-#		echo $REPLY bad choice try again
-#	else
-#		echo $REPLY
-#		break
-#	fi
-#	done	
-echo "insert table name to insert data in "
-read table_name
+
+# echo ${#array[*]}
+
+select choice in  ${array[*]}
+do
+	if [ $REPLY -gt ${#array[*]} ]
+	then
+		echo "
+		$REPLY is not on the menu
+		"
+		continue
+	else
+		echo "
+		... You selected ${array[${REPLY}-1]} Table...
+		"
+			table_name=${array[${REPLY}-1]} 
+		break 
+	fi
+done	
 
 let num_fields=`head -1 $table_name | awk -F: '{print NF}'`
 

@@ -1,6 +1,29 @@
 #!/usr/bin/bash
- read -p "Write table name: " table_name
- 
+echo "
+-----> Select your Table number from the menu <--------
+"
+array=(`ls`)
+
+
+# echo ${#array[*]}
+
+select choice in  ${array[*]}
+do
+	if [ $REPLY -gt ${#array[*]} ]
+	then
+		echo "
+		$REPLY is not on the menu
+		"
+		continue
+	else
+		echo "
+		... You selected ${array[${REPLY}-1]} Table...
+		"
+			table_name=${array[${REPLY}-1]} 
+		break 
+	fi
+done	
+
 
 
 

@@ -31,15 +31,16 @@ case $db_name in
 	echo "                               "
 					continue
 	else
-	read -p  "Are you sure to create $db_name DB" name_insist
-	if [ $name_insist==[yY] ]
+	read -p  "Are you sure to create $db_name DB  (Y/N) ?"  name_insist
+	echo $name_insist
+	if [[ $name_insist == [yY] ]]
 	then
 				mkdir $db_name 
 		echo "congrats you created database named $db_name"
 		echo "                               "
 					break
 			else 
-					continue
+					break
 			fi
 	fi
 	  					;;
