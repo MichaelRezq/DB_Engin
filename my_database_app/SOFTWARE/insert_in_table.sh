@@ -1,11 +1,11 @@
 #!/usr/bin/bash
 
+# ========== (1) let the user select the table first   ========
+
 echo "
 -----> Select your Table number from the menu <--------
 "
 array=(`ls`)
-
-
 # echo ${#array[*]}
 
 select choice in  ${array[*]}
@@ -24,6 +24,8 @@ do
 		break 
 	fi
 done	
+
+# ========== (1) let the user insert in the  the table    ========
 
 let num_fields=`head -1 $table_name | awk -F: '{print NF}'`
 

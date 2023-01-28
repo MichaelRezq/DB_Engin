@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 
+cd ../DATA_Do_NOT_EREASE 
 
 PS3="  Type your Table number to Drop : "
 
@@ -27,3 +28,6 @@ do
 		break 
 	fi
 done	
+
+
+cd - &> ~/../../dev/null

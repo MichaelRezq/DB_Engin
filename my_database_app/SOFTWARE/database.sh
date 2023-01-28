@@ -6,19 +6,19 @@ do
 	case $choice in
 		Create_Db ) echo "
 		Creating Database.."
-			./create_db.sh
+			source ./create_db.sh
 			;;
 		List_Db ) echo "
 		Listing Database..."
-			./list_db.sh
+			source ./list_db.sh
 			;;
 		Connect_Db ) echo "
 		Connecting Database..."
-		source ./connect_db.sh
+		source  ./connect_db.sh
 			;;
 		Drop_Db ) echo "
 		Dropping Database ..."
-			./drop_db.sh
+			source ./drop_db.sh
 			;;
 		* ) echo $REPLY "
 		is not a valid choice "

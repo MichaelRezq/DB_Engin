@@ -2,7 +2,9 @@
 #create_database
 echo "----------------------------"
 echo "Already exist databases..."
-ls -F | grep /
+cd ../DATA_Do_NOT_EREASE 
+
+ls -F | grep / | tr / " "
 echo "                               "
 
 # validating the input name
@@ -50,3 +52,5 @@ case $db_name in
 					continue;;
 esac
 done
+
+cd - &> ~/../../dev/null

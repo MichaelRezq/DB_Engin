@@ -32,7 +32,7 @@ do
 		rm   ${array[${REPLY}-1]}
 		
 		echo "
-		...  ${array[${REPLY}-1]} Table dropped successfully...
+		... ${array[${REPLY}-1]} Table dropped successfully...
 		"
 		echo
 		break 
