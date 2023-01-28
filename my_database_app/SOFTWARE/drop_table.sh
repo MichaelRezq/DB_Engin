@@ -2,16 +2,6 @@
 
 PS3="  Type your Table number to Drop : "
 
-echo -n "Enter Number: "
-read x
-
-if [ $((x%2)) == 0 ]; then
-  echo "Number is Even"
-else
-  echo "Number is Odd"
-fi
-
-
 echo "
 -----> Select your Table number from the menu <--------
 "

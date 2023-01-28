@@ -60,5 +60,5 @@ do
 	esac 
 done	
 else
-	echo "$table_name doesn't exist press enter to try agin!!"
+	echo "$table_name doesn't exist press enter to try again!!"
 fi
