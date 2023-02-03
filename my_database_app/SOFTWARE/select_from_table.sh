@@ -2,6 +2,7 @@
 echo "
 -----> Select your Table number from the menu <--------
 "
+
 array=(`ls`)
 
 
@@ -30,18 +31,19 @@ done
  
 #validate table name
 columns=`head -1 "$table_name" | awk 'BEGIN{ RS = ":";} {print $1}'`
-
 select choice in Select_all Select_column Select_row
 do
 	case $choice in
 	Select_all ) echo "selecting all fields "
 	cat $table_name
+
 	;;
 	Select_column ) 
 	    echo "Choose the column you want select it: " 
 		select ch in $columns
     	do 
         	awk -F: '{print $'$REPLY'}' $table_name 
+
     	done
 		;;
 
@@ -57,6 +59,7 @@ do
 			echo `grep ^$pk $table_name `
 		else
 			echo "id(PK) '$pk' dosent't exist please press 'enter' and write valid id"
+
 		fi
 		;;
 esac
