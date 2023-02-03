@@ -30,7 +30,7 @@ done
 
 	PS3="  Type your choice number : "
 
- select choice in Create_table List_tables Drop_table Insert_in_table Select_from_table Delete_from_table Update_from_table Remove_table
+ select choice in Create_table List_tables Drop_table Insert_in_table Select_from_table Delete_from_table Update_from_table 
  do
 	 case $choice in 
 		 Create_table ) echo "
@@ -51,6 +51,9 @@ done
 			 ;;
 		 Delete_from_table ) echo "Deletting from table..."
 			 ../../SOFTWARE/delete_from_table.sh
+			 ;;
+		Update_from_table ) echo "Updating from table..."
+			 ../../SOFTWARE/update_from_table.sh
 			 ;;
 		 * ) "not a propriate choice try again "
 			 ;;

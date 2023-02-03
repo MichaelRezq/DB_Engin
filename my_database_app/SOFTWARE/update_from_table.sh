@@ -1,9 +1,33 @@
 #!/usr/bin/bash
 
 # get table name
-read -p "write table name: " table_name
- 
-export table_name
+
+
+echo "
+-----> Select your Table number from the menu <--------
+"
+array=(`ls`)
+
+
+# echo ${#array[*]}
+
+select choice in  ${array[*]}
+do
+	if [ $REPLY -gt ${#array[*]} ]
+	then
+		echo "
+		$REPLY is not on the menu
+		"
+		continue
+	else
+		echo "
+		... You selected ${array[${REPLY}-1]} Table...
+		"
+			table_name=${array[${REPLY}-1]} 
+		break 
+	fi
+done	
+
 
 # get id of row 
 read -p "Enter the id(PK) of row: " pk
@@ -42,7 +66,8 @@ then
 		echo "row updated  successfully"
 
 else
-	echo "id(PK) '$pk' dosent't exist please press 'enter' and write valid id"
+	echo "id(PK) '$pk' dosent't exist please write valid id"
+	../../SOFTWARE/update_from_table.sh;
 fi
 
 
