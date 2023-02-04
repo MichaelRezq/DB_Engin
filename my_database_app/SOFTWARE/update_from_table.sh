@@ -36,7 +36,6 @@ row=`awk -F':' ' {  if($1=='$pk')  print $0}' $table_name `
 
 # check the PK exist
 if grep -Fxq "$row" "$table_name" &> ~/../../dev/null;
-# if grep -Fxq "$row" "$table_name" > /dev/null;
 
 then
 
