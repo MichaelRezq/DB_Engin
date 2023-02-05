@@ -57,30 +57,35 @@ then
 		# print field name and get values from user
 		for ((i=1;i<$num_fields-1;i++))
 		do
+		while true
+		do
 			
 			read -p "enter value of (${arr[$i]}) [${theType[$i]}]: " field
 			if [ "${theType[$i]}" == "string" ]
 			then
 			case $field in
-				*[a-zA-Z] ) userVal+=$field":" ;;
+				*[a-zA-Z] ) userVal+=$field":" 
+				break
+				;;
 				*)  echo "please inter valid value"
 				flag+=("faild")
-			 	../../SOFTWARE/update_from_table.sh;
-				 break
+				 continue
 				 ;;
 			
 			esac
 			elif [ "${theType[$i]}" == "integer"  ]
 			then
 				case $field in
-					[1-9]*[0-9] ) userVal+=$field":" ;;
+					[1-9] | [1-9]*[0-9] ) userVal+=$field":" 
+					break
+					;;
 					*)  echo "please inter valid value"
 					flag+=("faild")
-					../../SOFTWARE/update_from_table.sh;
-					break
+					continue
 					;;
 				esac
 			fi
+			done
 		done
 
 			# check no errors
@@ -92,5 +97,5 @@ then
 			fi
 else
 	echo "id(PK) '$pk' dosent't exist please write valid id"
-	../../SOFTWARE/update_from_table.sh;
+	# ../../SOFTWARE/update_from_table.sh;
 fi
