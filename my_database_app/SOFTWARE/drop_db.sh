@@ -21,11 +21,10 @@ do
 		continue
 	else
 		rm -r ${array[${REPLY}-1]}
-		
 		echo "
-		...Your ${array[${REPLY}-1]} DB deleted successfully ..."
-		echo
-		break 
+		...Your ${array[${REPLY}-1]} DB deleted successfully ...
+		"
+		break 2
 	fi
 done	
 

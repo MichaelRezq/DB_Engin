@@ -138,14 +138,14 @@ echo "
             choose from the menu
  
 "
-select choice in  Return_to_main_menu Continue_connecting_to_DB
-do
-	case $choice in
-	Return_to_main_menu) 
-			../../SOFTWARE/database.sh
-	    break ;;
-		Continue_connecting_to_DB)
-		break;;
-		*) echo "Invalid choice" ;;
-	esac
-done	
+# select choice in  Return_to_main_menu Continue_connecting_to_DB
+# do
+# 	case $choice in
+# 	Return_to_main_menu) 
+# 			../../SOFTWARE/database.sh
+# 	    break ;;
+# 		Continue_connecting_to_DB)
+# 		break;;
+# 		*) echo "Invalid choice" ;;
+# 	esac
+# done	

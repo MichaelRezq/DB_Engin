@@ -74,11 +74,14 @@ done
 let fields_num=fields_num
 
 echo "
-------------->insert your meta data  for $table_name table <-----
+	------------->insert your meta data  for $table_name table <-----
 "
 echo "      first insert column names
+
  "
-for ((i=1;i<=$fields_num;i++))
+			echo " 		field num 1 is the primary key"
+
+for ((i=2;i<=$fields_num;i++))
 do
 	# validating the input name
 while true
@@ -112,7 +115,13 @@ case $col_name in
 	"
 					continue
 	else
-				row_name+=$col_name:
+		if [ $i -eq 2 ] 
+		then 
+				row_name+="id:"$col_name:
+		else
+			row_name+=$col_name:
+		fi
+				
 					break
 	fi
 		  					;;
@@ -135,20 +144,36 @@ echo "
       second insert column types
 "
 
-PS3="=>Type your choice: "
+				echo " 
+				filed num 1 type  is integer
+				"
 
-for ((i=1;i<=$fields_num;i++))
+for ((i=2;i<=$fields_num;i++))
 do
+echo "=>Type your choice for filed $i: "
+
 #   only support string and integer
 select choice in string integer
 do 
 case $choice in 
-string ) echo string
-			row_type+=string:
+string ) 
+echo string
+		if [ $i -eq 2 ] 
+				then 
+						row_type+=integer:string:
+				else
+					row_type+=string:
+				fi
 				break;;
 integer ) 
 	echo integer
-			row_type+=integer:
+			if [ $i -eq 2 ] 
+				then 
+						row_type+=integer:integer:
+				else
+					row_type+=integer:
+				fi
+			
 				break;;
 	* )  echo "
 	only 1 and 2 are available
@@ -164,3 +189,16 @@ $row_name
 $row_type 
 
 "
+# PS3="=>Type your choice : "
+
+# select choice in  Return_to_main_menu Continue_connecting_to_DB
+# do
+# 	case $choice in
+# 	Return_to_main_menu) 
+# 			../../SOFTWARE/database.sh
+# 	    break ;;
+# 		Continue_connecting_to_DB)
+# 		break;;
+# 		*) echo "Invalid choice" ;;
+# 	esac
+# done	

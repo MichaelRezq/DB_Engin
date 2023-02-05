@@ -35,7 +35,7 @@ done
 	 case $choice in 
 		 Create_table ) echo "
 		 creating table..."
-			 ../../SOFTWARE/create_table.sh
+			 source ../../SOFTWARE/create_table.sh
 			 ;;
 		 List_tables ) echo "listing tables... "
 			 ../../SOFTWARE/list_tables.sh
