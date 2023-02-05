@@ -71,18 +71,26 @@ do
 		case $field in
 			#the name can't be empty
 				'' ) 
-				echo "the filed can't be empty."
-								continue ;;
+				if [[ $i == '0' ]]
+					then 	
+						echo "the pk can't be null."
+					continue
+					else
+						echo "the filed will be null."
+						row+=null:
+					break 
+				fi
+				;;
 			# the name can't have spaces
 				*[[:space:]] | [[:space:]]* ) 
 					echo "the filed can't start or end with any spaces"
 								continue;;
 			# the name must start with a-zA-z then can be zero or more a-zA-Z-0-9_.
-				[a-zAZ0-9_]*[a-zAZ0-9_] | [a-zAZ0-9_] )
+				[a-zA-Z0-9_]*[a-zA-Z0-9_] | [a-zA-Z0-9_] )
 					if [ "${theType[$i]}" == "string" ]
 						then
 						case $field in
-							*[a-zA-Z] )
+							*[a-zA-Z0-9] )
 							 	row+=$field:
 									break ;;
 							*)  
@@ -90,7 +98,7 @@ do
 								flag+=("faild")
 									continue ;;
 						esac
-					elif [ "${theType[$i]}" == "integer"  ]
+					elif [ "${theType[$i]}" == "integer" ]
 						then
 							case $field in
 								[1-9] | [1-9]*[0-9] ) 
@@ -109,6 +117,8 @@ do
 												echo "your primary key is $field"
 													break
 										fi 
+										else
+										row+=$field:
 									fi
 											;;
 								*) 
@@ -134,10 +144,10 @@ you inserted your data successfully
 "
 
 
-echo "
-            choose from the menu
+# echo "
+#             choose from the menu
  
-"
+# "
 # select choice in  Return_to_main_menu Continue_connecting_to_DB
 # do
 # 	case $choice in

@@ -64,7 +64,11 @@ then
 			if [ "${theType[$i]}" == "string" ]
 			then
 			case $field in
-				*[a-zA-Z] ) userVal+=$field":" 
+				*[a-zA-Z0-9] ) userVal+=$field":" 
+				break
+				;;
+				'' ) userVal+=null: 
+				echo "the field will be null"
 				break
 				;;
 				*)  echo "please inter valid value"
@@ -77,6 +81,10 @@ then
 			then
 				case $field in
 					[1-9] | [1-9]*[0-9] ) userVal+=$field":" 
+					break
+					;;
+					'' ) userVal+=null: 
+					echo "the field will be null"
 					break
 					;;
 					*)  echo "please inter valid value"
