@@ -1,15 +1,9 @@
 #!/usr/bin/bash
 
-# get table name
+# chose table name
 
-
-echo "
------> Select your Table number from the menu <--------
-"
+echo "-----> Select your Table you want to update it <--------"
 array=(`ls`)
-
-
-# echo ${#array[*]}
 
 select choice in  ${array[*]}
 do
@@ -33,44 +27,70 @@ done
 read -p "Enter the id(PK) of row: " pk
 
 # get names of column
-columns=`head -1 "$table_name" | awk 'BEGIN{ RS = ":";} {print $1}'`
+columns=`sed -n '1p' "$table_name"  | awk 'BEGIN{ RS = ":";} {print $0}'`
+# Get meta data
+types=`sed -n '2p' "$table_name" | awk 'BEGIN{ RS = ":";} {print $0}'`
 
 # get the row which want update it
-row=`awk -F':' ' {  if($1=='$pk')  print $0}' $table_name  `
+row=`awk -F':' ' {  if($1=='$pk')  print $0}' $table_name `
 
 # check the PK exist
-if grep -Fxq "$row" "$table_name" > /dev/null;
+if grep -Fxq "$row" "$table_name" &> ~/../../dev/null;
+
 then
 
 		# get number of field to loop on it because didn't know nums of field
 		let num_fields=`head -1 $table_name | awk -F: '{print NF}'`
 		arr=()
-
+		theType=()
+		flag=()
 		for col in $columns
 		do
 		arr+=($col)
+		done
+
+		for t in $types
+		do
+		theType+=($t)
 		done
 
 		# print field name and get values from user
 		for ((i=1;i<$num_fields-1;i++))
 		do
 			
-			read -p "enter value of (${arr[$i]}): " field
+			read -p "enter value of (${arr[$i]}) [${theType[$i]}]: " field
+			if [ "${theType[$i]}" == "string" ]
+			then
+			case $field in
+				*[a-zA-Z] ) userVal+=$field":" ;;
+				*)  echo "please inter valid value"
+				flag+=("faild")
+			 	../../SOFTWARE/update_from_table.sh;
+				 break
+				 ;;
 			
-			userVal+=$field":"
+			esac
+			elif [ "${theType[$i]}" == "integer"  ]
+			then
+				case $field in
+					[1-9]*[0-9] ) userVal+=$field":" ;;
+					*)  echo "please inter valid value"
+					flag+=("faild")
+					../../SOFTWARE/update_from_table.sh;
+					break
+					;;
+				esac
+			fi
 		done
 
-		# update the row in file
-		sed -i 's/'$row'/'$pk":"$userVal'/' $table_name
-
-		echo "row updated  successfully"
-
+			# check no errors
+			if [[ ${flag[*]} != "faild" ]]
+				then
+				# update the row in file
+				sed -i 's/'$row'/'$pk":"$userVal'/' $table_name
+				echo "row updated  successfully"
+			fi
 else
 	echo "id(PK) '$pk' dosent't exist please write valid id"
 	../../SOFTWARE/update_from_table.sh;
 fi
-
-
-
-
-

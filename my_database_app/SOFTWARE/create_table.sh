@@ -146,7 +146,8 @@ case $choice in
 string ) echo string
 			row_type+=string:
 				break;;
-integer ) echo integer
+integer ) 
+	echo integer
 			row_type+=integer:
 				break;;
 	* )  echo "

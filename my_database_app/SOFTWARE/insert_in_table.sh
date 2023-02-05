@@ -1,21 +1,21 @@
 #!/usr/bin/bash
-
-
-
+array=(`ls`)
 # ========== (0) check if the table is empty    ========
-echo ${#array[*]}
-if  [[ ${#array[*]} -eq 0 ]]
-then 
-	echo "  
-	your table is empty , Insert your first data 
-	"
-fi
+# echo ${#array[*]}
+# if  [[ ${#array[*]} -eq 0 ]]
+# then 
+# 	echo "  
+# 	your table is empty , Insert your first data 
+# 	"
+# fi
+
+
 # ========== (1) let the user select the table first   ========
 echo "
 -----> Select your Table number from the menu <--------
 "
-array=(`ls`)
-echo " your data  "
+
+# echo " your data  "
 select choice in  ${array[*]}
 do
 	if [ $REPLY -gt ${#array[*]} ]
@@ -28,25 +28,46 @@ do
 		echo "
 		... You selected ${array[${REPLY}-1]} Table...
 		"
+		# let the choice -1 as the choices are listed in the array from 0
 			table_name=${array[${REPLY}-1]} 
 		break 
 	fi
 done	
 
+#  
+	# ============================ set variables ============================
+# get names of column
+columns=`sed -n '1p' "$table_name"  | awk 'BEGIN{ RS = ":";} {print $0}'`
+# echo $columns
+# Get meta data
+types=`sed -n '2p' "$table_name" | awk 'BEGIN{ RS = ":";} {print $0}'`
+# echo $columns
+# echo $types
+		arr=()
+		theType=()
+		flag=()
+		for col in $columns
+		do
+		arr+=($col)
+		done
 
+		for t in $types
+		do
+		theType+=($t)
+		done
+
+let num_fields=`head -1 $table_name | awk -F: '{print NF}'` -1
+# echo $num_fields
 # ========== (1) let the user insert in the  the table    ========
-num_fields=`head -1 $table_name | awk -F: '{print NF}'`
-echo $num_fields
 
-for ((i=1;i<$num_fields;i++))
+for ((i=0;i<$num_fields-1;i++))
 do
 	#validate the field num
 	while true
 	do 
 		# read the input
-		read -p "insert filed num $i: "
+		read -p "enter value of (${arr[$i]}) [${theType[$i]}] "
 		field=$REPLY
-
 		case $field in
 			#the name can't be empty
 				'' ) 
@@ -57,53 +78,65 @@ do
 					echo "the filed can't start or end with any spaces"
 								continue;;
 			# the name must start with a-zA-z then can be zero or more a-zA-Z-0-9_.
-				[a-zAZ0-9_]*[a-zAZ0-9_] )
-				# search if the field is number one ?
-				if [[ $i == '1' ]]
-				then 
-				echo " you are in first filed "
-				if  [ $filed -eq [0-9] ]  
-				then 
-				# search if the pk exist in the table
-				if  (cat $table_name | grep ^$field) &> ~/../../dev/null 
-				then
-				echo $field
-				echo "
-				ops looks like  $field is Already exist write a uniqe pk
-						"
-								continue
-					else
-								row+=$field:
-					echo "your primary key is $field"
-
-								break
-				fi
-				else
-					echo "the primary key must be integer"
-									continue 
-					fi
-				else 
-					row+=$field:
-					break 
-				fi 
-				
+				[a-zAZ0-9_]*[a-zAZ0-9_] | [a-zAZ0-9_] )
+					if [ "${theType[$i]}" == "string" ]
+						then
+						case $field in
+							*[a-zA-Z] )
+							 	row+=$field:
+									break ;;
+							*)  
+								echo "please inter valid value"
+								flag+=("faild")
+									continue ;;
+						esac
+					elif [ "${theType[$i]}" == "integer"  ]
+						then
+							case $field in
+								[1-9] | [1-9]*[0-9] ) 
+								# search if the field is number one  "pk"?
+									if [[ $i == '0' ]]
+										then 
+										# search if the pk exist in the table
+										if  ( cat  $table_name | grep ^$field ) &> ~/../../dev/null 
+												then
+												echo "
+												ops looks like  $field is Already exist write a uniqe pk
+												"
+													continue
+											else
+												row+=$field:
+												echo "your primary key is $field"
+													break
+										fi 
+									fi
+											;;
+								*) 
+								echo "please inter valid value"
+									flag+=("faild")
+									continue ;;
+							esac 
+						fi 
 						break ;;
+				# if the user inputs any other data
 				* )
 				echo " write a valid input "
 				     continue ;;
 		esac
 	done
-
 # end of validation 
-	# row+=$field:
 done
+
 echo $row >> $table_name
-echo "you inserted your data successfully"
+
+echo "
+you inserted your data successfully
+"
 
 
 echo "
- To return to the main menu press 1 
-to continue inserting press 2 
+            choose from the menu
+ 
 "
 select choice in  Return_to_main_menu Continue_connecting_to_DB
 do
@@ -116,4 +149,3 @@ do
 		*) echo "Invalid choice" ;;
 	esac
 done	
-
