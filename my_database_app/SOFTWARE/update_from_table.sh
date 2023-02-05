@@ -97,6 +97,5 @@ then
 			fi
 else
 	echo "id(PK) '$pk' dosent't exist please write valid id"
-	pwd
 	../../SOFTWARE/update_from_table.sh;
 fi
