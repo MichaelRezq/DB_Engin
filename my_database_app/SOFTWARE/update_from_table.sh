@@ -26,6 +26,10 @@ done
 # get id of row 
 read -p "Enter the id(PK) of row: " pk
 
+case $pk in 
+
+'') echo "the pk cant be empty";;
+*)
 # get names of column
 columns=`sed -n '1p' "$table_name"  | awk 'BEGIN{ RS = ":";} {print $0}'`
 # Get meta data
@@ -107,3 +111,6 @@ else
 	echo "id(PK) '$pk' dosent't exist please write valid id"
 	# ../../SOFTWARE/update_from_table.sh;
 fi
+
+;;
+esac
