@@ -37,11 +37,14 @@ do
 		Delete_All )
 			sed -i '/^[[:digit:]]/d' $table_name
 			echo "All Rows deleted successfully"
+			break
 			;;
 
 		# if user select del row
 		Delete_Row )
-		
+		while true
+		do
+
 		# get the pk of row
 		read -p "input your id(PK) row: " pk
 		row=`awk -F':' ' {  if($1=='$pk')  print $0}' $table_name  `
@@ -50,9 +53,13 @@ do
 		then
 			sed -i '/'$row'/d' $table_name
 			echo "Row deleted successfully"
+			break
 		else
-			echo "id(PK) '$pk' dosent't exist please press 'enter' and write valid id"
+			echo "id(PK) '$pk' dosent't exist please write valid id"
+			continue
 		fi
+		done
+		break
 			;;
 
 		* ) echo chose a valid choice 
