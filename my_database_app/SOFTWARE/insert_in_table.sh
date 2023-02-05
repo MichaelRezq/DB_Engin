@@ -78,7 +78,7 @@ do
 					echo "the filed can't start or end with any spaces"
 								continue;;
 			# the name must start with a-zA-z then can be zero or more a-zA-Z-0-9_.
-				[a-zAZ0-9_]*[a-zAZ0-9_] | [a-zAZ0-9_] )
+				[a-zA-Z0-9_]*[a-zA-Z0-9_] | [a-zA-Z0-9_] )
 					if [ "${theType[$i]}" == "string" ]
 						then
 						case $field in
@@ -109,6 +109,8 @@ do
 												echo "your primary key is $field"
 													break
 										fi 
+										else
+										row+=$field:
 									fi
 											;;
 								*) 
