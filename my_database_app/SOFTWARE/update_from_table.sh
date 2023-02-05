@@ -22,13 +22,14 @@ do
 	fi
 done	
 
-
+while true 
+do 
 # get id of row 
 read -p "Enter the id(PK) of row: " pk
-
 case $pk in 
 
-'') echo "the pk cant be empty";;
+'') echo "the pk cant be empty"
+   				continue;;
 *)
 # get names of column
 columns=`sed -n '1p' "$table_name"  | awk 'BEGIN{ RS = ":";} {print $0}'`
@@ -109,8 +110,10 @@ then
 			fi
 else
 	echo "id(PK) '$pk' dosent't exist please write valid id"
+				continue
 	# ../../SOFTWARE/update_from_table.sh;
 fi
 
-;;
+		break;;
 esac
+done
